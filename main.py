@@ -1,34 +1,37 @@
 #import modules
 import pygame
 import sys
-
-#globals
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 500
-TEXT_SIZE = 30
+import classes
+import functions
+from globals import SCREEN_HEIGHT,SCREEN_WIDTH
 #setup
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+background = pygame.Rect((0,0),(SCREEN_WIDTH,SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
+tank = classes.Tank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,screen)
+
 
 #game loop
 while running:
+    #event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    functions.event_handling(tank)
 
     #update
     screen.fill((0, 0, 0))
 
     #game rendering here
-    font = pygame.font.SysFont('Arial', TEXT_SIZE)
-    text = font.render("Hello!", True, (255,255,255))
     
     #draw
-    screen.blit(text, (SCREEN_WIDTH/2 - text.get_width()/2, SCREEN_HEIGHT/2 - text.get_height()/2))
+    pygame.draw.rect(screen,(211,211,211),background)
+    tank.draw(screen)
     pygame.display.flip() #screen buffering
     clock.tick(60) #fps
 
 pygame.quit()
-sys.exit()
+sys.exit()  
