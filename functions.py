@@ -1,8 +1,9 @@
 import pygame
 import classes
+import random
 from globals import SCREEN_WIDTH, SCREEN_HEIGHT
 
-def event_handling(tank):
+def event_handling(tank, screen, shells):
     keys = pygame.key.get_pressed()
 
     tank_x_delta = 0
@@ -28,3 +29,10 @@ def event_handling(tank):
     if moveBounds:
         tank.move(tank_x_delta,tank_y_delta)
         tank.update()  
+
+def setup(screen, targets):
+    for targetIndex in range (50):
+        x = random.randint(0,SCREEN_WIDTH)
+        y = random.randint(0,SCREEN_HEIGHT)
+        target = classes.Target(x,y,screen)
+        targets.append(target)
