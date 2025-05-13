@@ -92,10 +92,11 @@ class Tank:
         self.rotate(0)  # Refresh barrel position
 
     def draw(self, screen):
-        pygame.draw.rect(self.frame_surface, self.frame_colour, self.frame)
-        pygame.draw.rect(self.roof_surface, self.roof_colour, self.roof)
-        pygame.draw.circle(self.lid_surface, self.lid_colour, self.lid_center, self.lid_radius)
-        screen.blit(self.barrel, self.barrel_rect.topleft)
+        if(self.intact):
+            pygame.draw.rect(self.frame_surface, self.frame_colour, self.frame)
+            pygame.draw.rect(self.roof_surface, self.roof_colour, self.roof)
+            pygame.draw.circle(self.lid_surface, self.lid_colour, self.lid_center, self.lid_radius)
+            screen.blit(self.barrel, self.barrel_rect.topleft)
 
 class Shell:
     def __init__(self, source_tank, background):
