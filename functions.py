@@ -11,54 +11,75 @@ def event_handling(tank1, tank2, screen, shells, targets):
     tank1_y_delta = 0
     tank2_x_delta = 0
     tank2_y_delta = 0
-    
+
+    # --- TANK 1 INPUTS ---
     if keys[pygame.K_w]:
-        tank1.direction = "up"
+        if tank1.direction != "up" and tank1.can_rotate("up", targets):
+            tank1.direction = "up"
+            tank1.update()
         tank1_y_delta = -2
     elif keys[pygame.K_s]:
-        tank1.direction = "down"
+        if tank1.direction != "down" and tank1.can_rotate("down", targets):
+            tank1.direction = "down"
+            tank1.update()
         tank1_y_delta = 2
     elif keys[pygame.K_a]:
-        tank1.direction = "left"
+        if tank1.direction != "left" and tank1.can_rotate("left", targets):
+            tank1.direction = "left"
+            tank1.update()
         tank1_x_delta = -2
     elif keys[pygame.K_d]:
-        tank1.direction = "right"
+        if tank1.direction != "right" and tank1.can_rotate("right", targets):
+            tank1.direction = "right"
+            tank1.update()
         tank1_x_delta = 2
     elif keys[pygame.K_e]:
-        tank1.rotate(2)
+        tank1.rotate(2, targets)
     elif keys[pygame.K_q]:
-        tank1.rotate(-2)
-    
+        tank1.rotate(-2, targets)
+
+    # --- TANK 2 INPUTS ---
     if keys[pygame.K_i]:
-        tank2.direction = "up"
+        if tank2.direction != "up" and tank2.can_rotate("up", targets):
+            tank2.direction = "up"
+            tank2.update()
         tank2_y_delta = -2
     elif keys[pygame.K_k]:
-        tank2.direction = "down"
+        if tank2.direction != "down" and tank2.can_rotate("down", targets):
+            tank2.direction = "down"
+            tank2.update()
         tank2_y_delta = 2
     elif keys[pygame.K_j]:
-        tank2.direction = "left"
+        if tank2.direction != "left" and tank2.can_rotate("left", targets):
+            tank2.direction = "left"
+            tank2.update()
         tank2_x_delta = -2
     elif keys[pygame.K_l]:
-        tank2.direction = "right"
+        if tank2.direction != "right" and tank2.can_rotate("right", targets):
+            tank2.direction = "right"
+            tank2.update()
         tank2_x_delta = 2
     elif keys[pygame.K_o]:
-        tank2.rotate(2)
+        tank2.rotate(2, targets)
     elif keys[pygame.K_u]:
-        tank2.rotate(-2)
+        tank2.rotate(-2, targets)
 
-    moveBounds1 = (tank1.x + tank1_x_delta + tank1.frame_width/2 < SCREEN_WIDTH and tank1.x + tank1_x_delta - tank1.frame_width/2 > 0 
-                    and tank1.y + tank1_y_delta + tank1.frame_height/2 < SCREEN_HEIGHT and tank1.y + tank1_y_delta - tank1.frame_height/2 > 0)
-    
+    # --- MOVEMENT BOUNDS + COLLISION ---
+    moveBounds1 = (tank1.x + tank1_x_delta + tank1.frame_width/2 < SCREEN_WIDTH and 
+                   tank1.x + tank1_x_delta - tank1.frame_width/2 > 0 and 
+                   tank1.y + tank1_y_delta + tank1.frame_height/2 < SCREEN_HEIGHT and 
+                   tank1.y + tank1_y_delta - tank1.frame_height/2 > 0)
+
     if moveBounds1 and not tank_hits_wall(tank1, tank1_x_delta, tank1_y_delta, targets):
-        tank1.move(tank1_x_delta, tank1_y_delta)
-        tank1.update()
+        tank1.move(tank1_x_delta, tank1_y_delta, targets)
 
-    moveBounds2 = (tank2.x + tank2_x_delta + tank2.frame_width/2 < SCREEN_WIDTH and tank2.x + tank2_x_delta - tank2.frame_width/2 > 0
-                    and tank2.y + tank2_y_delta + tank2.frame_height/2 < SCREEN_HEIGHT and tank2.y + tank2_y_delta - tank2.frame_height/2 > 0)
-    
+    moveBounds2 = (tank2.x + tank2_x_delta + tank2.frame_width/2 < SCREEN_WIDTH and 
+                   tank2.x + tank2_x_delta - tank2.frame_width/2 > 0 and 
+                   tank2.y + tank2_y_delta + tank2.frame_height/2 < SCREEN_HEIGHT and 
+                   tank2.y + tank2_y_delta - tank2.frame_height/2 > 0)
+
     if moveBounds2 and not tank_hits_wall(tank2, tank2_x_delta, tank2_y_delta, targets):
-        tank2.move(tank2_x_delta, tank2_y_delta)
-        tank2.update()
+        tank2.move(tank2_x_delta, tank2_y_delta, targets)
 
 def setup(screen, targets):
     for targetX in range (750):
