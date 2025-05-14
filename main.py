@@ -19,6 +19,7 @@ tank2.barrel_original.fill((111, 17, 111))
 gamestate = "menu"
 shells = []
 targets = []
+controlsOn = False
 functions.setup(screen, targets)
 
 
@@ -28,16 +29,16 @@ while running:
 
     #state manager
     if gamestate == "menu":
-        nextState = functions.drawMenu(screen, running)
+        nextState = functions.drawMenu(screen, running, controlsOn)
         if(nextState == "single player"):
-            print("single player")
-        elif(nextState == "multiplayer"):
-            gamestate = "multiplayer"
-        elif(nextState == "controls"):
-            print("controls")
+            gamestate = "play"
+        elif(nextState == "controlOn"):
+            controlsOn = True
+        elif(nextState == "controlOff"):
+            controlsOn = False
         elif nextState == "off":
             running = False
-    elif gamestate == "multiplayer":        
+    elif gamestate == "play":        
         #event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -71,7 +72,7 @@ while running:
             tank2.roof_colour = (124, 150, 172)
             tank2.lid_colour = (135, 121, 148)
             tank2.barrel_original.fill((111, 17, 111))
-            gamestate = "multiplayer"
+            gamestate = "play"
             shells = []
             targets = []
             functions.setup(screen, targets)
